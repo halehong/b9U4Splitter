@@ -1,0 +1,164 @@
+{
+  "contract_name": "Splitter",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "getAliceBalance",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "kill",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": true,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "getCarolBalance",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "getContractBalance",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "carol",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "sendFunds",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": true,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "bob",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "getBobBalance",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "alice",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "_alice",
+          "type": "address"
+        },
+        {
+          "name": "_bob",
+          "type": "address"
+        },
+        {
+          "name": "_carol",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "constructor"
+    }
+  ],
+  "unlinked_binary": "0x6060604052341561000f57600080fd5b6040516060806104568339810160405280805191906020018051919060200180519150505b60008054600160a060020a03338116600160a060020a031992831617909255600180548684169083161790556002805485841690831617905560038054928416929091169190911790555b5050505b6103c4806100926000396000f300606060405236156100885763ffffffff60e060020a60003504166325c4dc3c811461008d57806341c0e1b5146100b257806357903b0b146100ce5780636f9fb98a146100f35780638b930f15146101185780638d68cf59146101475780638da5cb5b14610163578063c09cec7714610192578063f1a16f68146101c1578063fb47e3a2146101e6575b600080fd5b341561009857600080fd5b6100a0610215565b60405190815260200160405180910390f35b6100ba610226565b604051901515815260200160405180910390f35b34156100d957600080fd5b6100a0610238565b60405190815260200160405180910390f35b34156100fe57600080fd5b6100a0610249565b60405190815260200160405180910390f35b341561012357600080fd5b61012b61025a565b604051600160a060020a03909116815260200160405180910390f35b6100ba610269565b604051901515815260200160405180910390f35b341561016e57600080fd5b61012b61035a565b604051600160a060020a03909116815260200160405180910390f35b341561019d57600080fd5b61012b610369565b604051600160a060020a03909116815260200160405180910390f35b34156101cc57600080fd5b6100a0610378565b60405190815260200160405180910390f35b34156101f157600080fd5b61012b610389565b604051600160a060020a03909116815260200160405180910390f35b600154600160a060020a0316315b90565b60008054600160a060020a0316ff5b90565b600354600160a060020a0316315b90565b600054600160a060020a0316315b90565b600354600160a060020a031681565b60003481901161027857600080fd5b34600160a060020a03331631101561028f57600080fd5b60015433600160a060020a039081169116141561031e5760028054600160a060020a0316906108fc90345b049081150290604051600060405180830381858888f1935050505015156102e057600080fd5b600354600160a060020a03166108fc6002345b049081150290604051600060405180830381858888f19350505050151561031957600080fd5b610352565b600054600160a060020a03163480156108fc0290604051600060405180830381858888f19350505050151561035257600080fd5b5b5060015b90565b600054600160a060020a031681565b600254600160a060020a031681565b600254600160a060020a0316315b90565b600154600160a060020a0316815600a165627a7a72305820f94333be52cc8067ba32335697efdcfe681bec77423e3ed041910401204aac250029",
+  "networks": {
+    "42": {
+      "events": {},
+      "links": {},
+      "address": "0xa80abe60fe9964e9412d7f69e1e98093a35a5792",
+      "updated_at": 1515152068621
+    }
+  },
+  "schema_version": "0.0.5",
+  "updated_at": 1515152068621
+}
