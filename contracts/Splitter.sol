@@ -35,13 +35,11 @@ contract Splitter {
         carol = _carol;
     }
 
-    function () public payable {
-        //This function is needed to allow the contract to store value
-    }
+    function () public payable {}
 
-    function kill() public payable returns(bool) {
+    function kill() public {
+        require(msg.sender == owner);
         selfdestruct(owner);
-        return true;
     }
 
     function getContractBalance() returns (uint) {
