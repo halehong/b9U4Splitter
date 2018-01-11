@@ -28,8 +28,6 @@ contract Splitter {
     address public bob;
     address public carol;
 
-    uint private contractBalance;
-
     function Splitter(address _alice, address _bob, address _carol) public {
         owner = msg.sender;
         alice = _alice;
@@ -39,7 +37,6 @@ contract Splitter {
 
     function () public payable {
         //This function is needed to allow the contract to store value
-        contractBalance += msg.value;
     }
 
     function kill() public payable returns(bool) {
@@ -72,8 +69,6 @@ contract Splitter {
             carol.transfer(msg.value/2);
          } else {
             //else, funds go to the contract
-            //update the private variable that keeps track of the available balance
-            contractBalance += msg.value;
          }
 
         return true;

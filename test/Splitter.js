@@ -26,6 +26,7 @@ contract('Splitter', function(accounts) {
   });
 
   it("Alice tranfer should send half to Bob and Carol", function() {
+    console.log("it: Alice tranfer should send half to Bob and Carol...");
     return instance.getAliceBalance.call().then (function(balance) {
       alice_balance_start = web3.fromWei(balance, "ether");
       console.log("Alice start = " + alice_balance_start.toString());
@@ -68,6 +69,7 @@ contract('Splitter', function(accounts) {
   });
 
   it("Carol transfers to Contract successfully", function(){
+    console.log("it: Carol transfers to Contract successfully...");
     return instance.getCarolBalance.call().then(function(balance){
       carol_balance_start = web3.fromWei(balance, "ether");
       console.log("Carol start = " + carol_balance_start.toString());
