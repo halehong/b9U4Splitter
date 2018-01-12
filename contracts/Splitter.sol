@@ -35,8 +35,6 @@ contract Splitter {
         carol = _carol;
     }
 
-    function () public payable {}
-
     function kill() public {
         require(msg.sender == owner);
         selfdestruct(owner);
@@ -60,13 +58,10 @@ contract Splitter {
 
     function sendFunds () public payable returns (bool) {
         require(msg.value > 0); //avoid 0 value transfers
-        require(msg.sender.balance >= msg.value); //avoid overspending
 
-         if (msg.sender == alice) { //if sender is Alice then the funds are split between Bob and Carol
+         if (msg.sender == alice) { //if sender is Alice then the funds are split between Bob and Carol, else funds go to the contract
             bob.transfer(msg.value/2);
             carol.transfer(msg.value/2);
-         } else {
-            //else, funds go to the contract
          }
 
         return true;
