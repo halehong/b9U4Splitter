@@ -1,5 +1,7 @@
 pragma solidity ^0.4.4;
 
+import "./MyShared/Funded.sol";
+
 /*
 Splitter
 You will create a smart contract named Splitter whereby:
@@ -22,110 +24,74 @@ Do not:
 split between more than 2 people
 */
 
-contract Splitter {
-    address public owner;
+contract Splitter is Funded {
+    //is Funded includes as well:
+    // - Owned
+    // - Stoppable
+
+    // To see the balance of the Splitter contract from a web page: contractAddress.balance
+    // To see the balance of Alice, Bob or Carol: address.balance
+    // To send ether to the contract: depositFundsToSplitter.sendTransaction(...)
+    // Kill switch implemented in the Stoppable super contract
+
     address public alice;
     address public bob;
     address public carol;
 
-    bool private isKilled;
+        event LogSplitterNew (address _sender, address _alice, address _bob, address _carol);
+    // Constructor
+    function Splitter(address _alice, address _bob, address _carol)
+        public 
+    {
+        require(_alice != 0);
+        require(_bob != 0);
+        require(_carol != 0);
 
-    function Splitter(address _alice, address _bob, address _carol) public {
-        require(_alice != address(0));
-        require(_bob != address(0));
-        require(_carol != address(0));
-
-        owner = msg.sender;
         alice = _alice;
         bob = _bob;
         carol = _carol;
 
-        isKilled = false;
+        LogSplitterNew (msg.sender, _alice, _bob, _carol);
     }
 
-    modifier onlyOwner() {
-        require(msg.sender == owner);
-        _;
-    }
-
-    modifier onlyParticipants() {
-        require (msg.sender == alice || msg.sender == bob || msg.sender == carol || msg.sender == owner);
-        _;
-    }
-
-    function kill() onlyOwner public {
-        selfdestruct(owner);
-    }
-
-    function softKill() onlyOwner public returns(bool) {
-        isKilled = true;
-        return true;
-    }
-
-    function softResurrect() onlyOwner public returns(bool) {
-        isKilled = false;
-        return true;
-    }
-
-    function getIsKilled () public returns(bool) {
-        return isKilled;
-    }
-
-    function isKilledRefund (address _address, uint _amount) private {
-        require (isKilled);
-        _address.transfer(_amount);
-    }
-
-    function refund (address _address, uint _amount) onlyOwner public returns (bool) {
-        //Is possible that someone sends funds to the contract by mistake. This function allows the Owner to refund a given account
-        require (_address != address(0));
-        _address.transfer(_amount);
-        return true;
-    }
-
-    function getContractBalance() onlyOwner public returns (uint) {
-        return this.balance;
-    }
-
-    function getBalance(address _address) onlyParticipants public returns (uint) {
-        return _address.balance;
-    }
-
-    function sendFunds () onlyParticipants public payable returns (bool) {
-        //Only participants can use this function to send funds to the contract
+        event LogSplitterDepositFundsToSplitter (address _sender, uint _value);
         //If Alice is using this function the funds will be split half to Bob and the other half to Carol
-
+    function depositFundsToSplitter ()
+        onlyIfRunning 
+        public 
+        payable 
+        returns (bool) 
+    {
         require(msg.value > 0); //avoid 0 value transfers
 
-        if (isKilled) {
-            isKilledRefund (msg.sender, msg.value);
-            return false;
-        } else {
-            if (msg.sender == alice) { //if sender is Alice then the funds are split between Bob and Carol, else funds go to the contract
-                require (msg.value % 2 == 0); //Divisible
-                bob.transfer(msg.value/2);
-                carol.transfer(msg.value/2);
-            }
-            return true;
+        if (msg.sender == alice) { //if sender is Alice then the funds are split between Bob and Carol, else funds go to the contract
+            require (msg.value % 2 == 0); //Divisible
+            bob.transfer(msg.value/2);
+            carol.transfer(msg.value/2);
         }
+
+        LogSplitterDepositFundsToSplitter (msg.sender, msg.value);
+        return true;
     }
 
-    function splitFunds (address _address1, address _address2) public payable returns (bool) {
+        event LogSplitterSendSplitFunds (address _sender, uint _value, address _address1, address _address2);
         //Anybody can use this function to split funds between two given addresses
-
+    function sendSplitFunds (address _address1, address _address2) 
+        onlyIfRunning
+        public 
+        payable 
+        returns (bool) 
+    {
         require(msg.value > 0); //avoid 0 value transfers
 
-        if (isKilled) {
-            isKilledRefund (msg.sender, msg.value);
-            return false;
-        } else {
-            require(msg.value % 2 == 0); //Divisible
-            require(_address1 != address(0));
-            require(_address2 != address(0));
+        require(msg.value % 2 == 0); //Divisible
+        require(_address1 != address(0));
+        require(_address2 != address(0));
 
-            _address1.transfer (msg.value / 2);
-            _address2.transfer (msg.value / 2);
-            return true;
-        }
+        _address1.transfer (msg.value / 2);
+        _address2.transfer (msg.value / 2);
+        
+        LogSplitterSendSplitFunds (msg.sender, msg.value, _address1, _address2);
+        return true;
     }
 }
