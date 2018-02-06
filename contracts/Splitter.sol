@@ -1,34 +1,37 @@
 pragma solidity ^0.4.4;
 
-import "./MyShared/Funded.sol";
-
 /*
+
+Last update: 2018-02-06
+ Version: 2.1
+
 Splitter
 You will create a smart contract named Splitter whereby:
-
-there are 3 people: Alice, Bob and Carol
-we can see the balance of the Splitter contract on the web page
-whenever Alice sends ether to the contract, half of it goes to Bob and the other half to Carol
-we can see the balances of Alice, Bob and Carol on the web page
-we can send ether to it from the web page
-It would be even better if you could team up with different people impersonating Alice, Bob and Carol, all cooperating on a test net.
+- there are 3 people: Alice, Bob and Carol
+- we can see the balance of the Splitter contract on the web page
+- whenever Alice sends ether to the contract, half of it goes to Bob and the other half to Carol
+- we can see the balances of Alice, Bob and Carol on the web page
+- we can send ether to it from the web page
+- It would be even better if you could team up with different people impersonating Alice, Bob and Carol, all cooperating on a test net.
 
 Stretch goals:
-
-add a kill switch to the whole contract
-make the contract a utility that can be used by David, Emma and anybody with an address to split Ether between any 2 other addresses of their own choice
-cover potentially bad input data
+- add a kill switch to the whole contract
+- make the contract a utility that can be used by David, Emma and anybody with an address to split Ether between any 2 other addresses of their own choice
+- cover potentially bad input data
 
 Do not:
+- split between more than 2 people
 
-split between more than 2 people
+CORE functions:
+- Constructor
+- depositFundsToSplitter
+- sendSplitFunds
+
 */
 
-contract Splitter is Funded {
-    //is Funded includes as well:
-    // - Owned
-    // - Stoppable
+import "./_FundsManager.sol";
 
+contract Splitter is FundsManager {
     // To see the balance of the Splitter contract from a web page: contractAddress.balance
     // To see the balance of Alice, Bob or Carol: address.balance
     // To send ether to the contract: depositFundsToSplitter.sendTransaction(...)
@@ -53,6 +56,8 @@ contract Splitter is Funded {
 
         LogSplitterNew (msg.sender, _alice, _bob, _carol);
     }
+
+// CORE functions
 
         event LogSplitterDepositFundsToSplitter (address _sender, uint _value);
         //If Alice is using this function the funds will be split half to Bob and the other half to Carol
